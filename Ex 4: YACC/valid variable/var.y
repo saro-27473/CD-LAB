@@ -1,28 +1,28 @@
 %{
 #include<stdio.h>
+#include<stdlib.h>
 %}
-%token DIGIT LETTER
+
+%token DIGIT LETTER UND NL
+
 %%
-stmt:A
-     ;
-A: LETTER B
- ;
-B: LETTER B
- | DIGIT B
- | LETTER
- | DIGIT
- ;
+stmt: variable NL {printf("valid identifiers\n"); exit(0);}
+;
+variable: LETTER alphanumeric
+;
+alphanumeric: LETTER alphanumeric | DIGIT alphanumeric | UND alphanumeric | LETTER | DIGIT | UND
+;
+
 %%
-int main(){
-printf("enter string \n");
-if(yyparse()==0)
-printf("valid");
-return 0;
-}
-int yyerror()
+
+int yyerror(char *msg)
 {
-printf("invalid");
-return 0;
+ printf("Invalid variable\n");
+ exit(0);
 }
-yywrap()
-{}
+
+main()
+{
+ printf("enter the variable: \n");
+ yyparse();
+}
