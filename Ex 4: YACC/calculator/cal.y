@@ -6,14 +6,14 @@
 %left '+' '-'
 %left '*' '/'
 %%
-st:exp{printf("\nValid:%d",$1);}
+st:exp{printf("Valid\nResult:%d",$1);}
 ;
-exp:exp '+' exp 	{$$=$1+$3;}
-|exp '-' exp 		{$$=$1-$3;}
-|exp '*' exp 		{ $$=$1*$3;}
-|exp '/' exp 		{if($3==0) yyerror("error"); else  $$=$1/$3;}
-|dig 			{$$=$1;}
-|'('exp')' 		{$$=$2;}
+exp:exp '+' exp {$$=$1+$3;}
+|exp '-' exp {$$=$1-$3;}
+|exp '*' exp {$$=$1*$3;}
+|exp '/' exp {if($3==0) yyerror("error"); else  $$=$1/$3;}
+|dig {$$=$1;}
+|'('exp')' {$$=$2;}
 ;
 %%
 int main()
