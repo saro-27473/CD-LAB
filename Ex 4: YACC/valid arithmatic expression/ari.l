@@ -1,6 +1,5 @@
 %{
-#include"y.tab.h"
-#include<math.h>
+#include "y.tab.h"
 %}
 %%
 [a-zA-Z]+ {return id;}
