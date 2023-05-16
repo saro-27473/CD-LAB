@@ -30,6 +30,3 @@ int yyerror()
 printf("\n Invalid\n");
 return 0;
 }
-yywrap()
-{
-}
