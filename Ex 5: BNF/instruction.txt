@@ -1,0 +1,4 @@
+lex bnf.l
+yacc -d bnf.y
+gcc lex.yy.c y.tab.c --l-l w
+./a.out test.c
