@@ -1,0 +1,3 @@
+lex filename.l
+cc lex.yy.c
+filename.exe(in windows) or ./a.out (in ubuntu terminal)
