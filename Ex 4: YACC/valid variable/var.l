@@ -2,9 +2,9 @@
 #include "y.tab.h"
 %}
 %%
-[0-9]+ {return DIGIT;}
-[a-zA-Z]+ {return LETTER;}
-[ \t] {;}
-\n { return 0;}
-. {return yytext[0];}
+[a-zA-Z] { return LETTER ;}
+[0-9] { return DIGIT ; }
+[\n] { return NL ;}
+[_] { return UND; }
+. { return yytext[0]; }
 %%
