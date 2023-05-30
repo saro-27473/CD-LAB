@@ -1,4 +1,4 @@
-lex bnf.l
-yacc -d bnf.y
-gcc lex.yy.c y.tab.c --l-l w
-./a.out test.c
+lex 5.l
+yacc -d 5.y
+gcc lex.yy.c y.tab.c -ll -lm -w
+./a.out 5.c
