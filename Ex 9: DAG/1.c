@@ -88,7 +88,7 @@ int main() {
     for (int i = 0; i < DAGIndex; i++) {
         printf("%d\t%d\t%d\t%c\n", DAG[i].ptr, DAG[i].left, DAG[i].right, DAG[i].label);
     }
-
+}
 /*  Explanation
     Syntax Tree:
 
