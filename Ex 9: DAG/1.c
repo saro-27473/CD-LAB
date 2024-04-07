@@ -1,96 +1,50 @@
-#include<stdio.h>
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
-int main()
-{
-struct da
-{
-int ptr,left,right;
-char label;
-}dag[25];
-int ptr,l,j,change,n=0,i=0,state=1,x,y,k;
-char store,*input1,input[25],var;
-for(i=0;i<25;i++)
-{
-dag[i].ptr=NULL;
-dag[i].left=NULL;
-dag[i].right=NULL;
-dag[i].label=NULL;
-}
-printf("\n\nENTER THE EXPRESSION\n\n");
-scanf("%s",input1);
-/*EX:((a*b-c))+((b-c)*d)) like this give with paranthesis.limit
-is 25 char ucan change that*/
-for(i=0;i<25;i++)
-input[i]=NULL;
-l=strlen(input1);
-a:
-for(i=0;input1[i]!=')';i++);
-for(j=i;input1[j]!='(';j--);
-for(x=j+1;x<i;x++)
-if(isalpha(input1[x]))
-input[n++]=input1[x];
-else
-if(input1[x]!='0')
-store=input1[x];
-input[n++]=store;
-for(x=j;x<=i;x++)
-input1[x]='0';
-if(input1[0]!='0')goto a;
-for(i=0;i<n;i++)
-{
-dag[i].label=input[i];
-dag[i].ptr=i;
-if(!isalpha(input[i])&&!isdigit(input[i]))
-{
-dag[i].right=i-1;
-ptr=i;
-var=input[i-1];
-if(isalpha(var))
-ptr=ptr-2;
-else
-{
-ptr=i-1;
-b:
-if(!isalpha(var)&&!isdigit(var))
-{
-ptr=dag[ptr].left;
-var=input[ptr];
-goto b;
-}
-else
-ptr=ptr-1;
-}
-dag[i].left=ptr;
-}
-}
-printf("\n SYNTAX TREE FOR GIVEN EXPRESSION\n\n");
-printf("\n\n PTR \t\t LEFT PTR \t\t RIGHT PTR \t\t LABEL\n\n");
-for(i=0;i<n;i++)/* draw the syntax tree for the following
-output with pointer value*/
-printf("\n%d\t%d\t%d\t%c\n",dag[i].ptr,dag[i].left,dag[i].right,dag[i].label);
-getch();
-for(i=0;i<n;i++)
-{
-for(j=0;j<n;j++)
-{
-if((dag[i].label==dag[j].label&&dag[i].left==dag[j].left)&&dag[
-i].right==dag[j].right)
-{
-for(k=0;k<n;k++)
-{
-if(dag[k].left==dag[j].ptr)dag[k].left=dag[i].ptr;
-if(dag[k].right==dag[j].ptr)dag[k].right=dag[i].ptr;
-}
-dag[j].ptr=dag[i].ptr;
-}
-}
-}
-printf("\n DAG FOR GIVEN EXPRESSION\n\n");
-printf("\n\n PTR \t LEFT PTR \t RIGHT PTR \t LABEL \n\n");
-for(i=0;i<n;i++)/*draw DAG for the following output with
-pointer value*/
-printf("\n %d\t\t%d\t\t%d\t\t%c\n",dag[i].ptr,dag[i].left,dag[i].right,dag[i].label);
-getch();
-return 0;
+#define MAX_EXPRESSION_LENGTH 25
+
+struct dag_node {
+    int ptr, left, right;
+    char label;
+};
+
+int main() {
+    struct dag_node dag[MAX_EXPRESSION_LENGTH];
+    char input[MAX_EXPRESSION_LENGTH];
+
+    printf("\nEnter the expression (limit is %d characters):\n", MAX_EXPRESSION_LENGTH);
+    fgets(input, MAX_EXPRESSION_LENGTH, stdin);
+    input[strcspn(input, "\n")] = '\0'; // Remove newline character
+
+    int input_length = strlen(input);
+    int dag_index = 0;
+    char store;
+
+    for (int i = 0; i < input_length; i++) {
+        store = input[i];
+        if (store != '(' && store != ')') {
+            dag[dag_index].label = store;
+            dag[dag_index].ptr = dag_index;
+            dag[dag_index].left = -1; // Initialize left and right pointers
+            dag[dag_index].right = -1;
+            dag_index++;
+        }
+    }
+
+    printf("\nSyntax tree for the given expression:\n");
+    printf("\n PTR \t LEFT PTR \t RIGHT PTR \t LABEL\n\n");
+
+    for (int i = 0; i < dag_index; i++) {
+        printf("%d\t%d\t%d\t%c\n", dag[i].ptr, dag[i].left, dag[i].right, dag[i].label);
+    }
+
+    printf("\nDirected Acyclic Graph (DAG) for the given expression:\n");
+    printf("\n PTR \t LEFT PTR \t RIGHT PTR \t LABEL\n\n");
+
+    for (int i = 0; i < dag_index; i++) {
+        printf("%d\t%d\t%d\t%c\n", dag[i].ptr, dag[i].left, dag[i].right, dag[i].label);
+    }
+
+    return 0;
 }
