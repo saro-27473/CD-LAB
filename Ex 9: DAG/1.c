@@ -14,6 +14,7 @@ int main() {
     char input[MAX_EXPRESSION_LENGTH];
 
     printf("\nEnter the expression (limit is %d characters):\n", MAX_EXPRESSION_LENGTH);
+    // Using that experssion as a input ==>> ((a*b-c))+((b-c)*d)
     fgets(input, MAX_EXPRESSION_LENGTH, stdin);
     input[strcspn(input, "\n")] = '\0'; // Remove newline character
 
